@@ -1,0 +1,9 @@
+.navbar-emerald {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: #36B069;
+    height: 70px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}

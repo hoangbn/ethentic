@@ -75,3 +75,13 @@ body {
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.0470588) 0px 4px 4px;
 }
+
+.navbar-emerald {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background-color: #36B069;
+  height: 70px;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}

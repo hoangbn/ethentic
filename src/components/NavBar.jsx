@@ -8,19 +8,25 @@ class NavBar extends Component {
     const username = this.props.username;
     const user = this.props.user;
     return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-blue fixed-top">
-        <Link className="navbar-brand" to="/">Bet Stack</Link>
+      <nav className="navbar navbar-white">
+        <Link className="navbar-brand navbar-child" to="/">Bet Stack</Link>
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link className="nav-link" to='/'>{username}</Link>
+            <Link className="nav-link navbar-child" to='/' style={{
+              marginLeft: '50px'
+            }}>{username}</Link>
           </li>
         </ul>
         <img src={user.avatarUrl() ? user.avatarUrl() : './avatar-placeholder.png'} class="avatar" width="25" height="25"alt=""/>
-        <button
-          className="btn btn-primary"
+        <div
+          style={{
+            marginTop: '10px',
+            marginRight: '20px',
+            color: '#36B069'
+          }}
           onClick={this.props.signOut.bind(this)}
-        >Sign out
-        </button>
+        ><p>Sign out</p>
+        </div>
 
       </nav>
     )

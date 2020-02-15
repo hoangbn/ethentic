@@ -9,3 +9,13 @@
   margin: auto;
   padding: 40px 15px;
 }
+
+.btn-emerald {
+  height: 50px;
+  width: 250px;
+  font-family: 'Roboto';
+  font-size: 18px;
+  color: #fff;
+  border-radius: 10px;
+  background-color: #36B069;
+}

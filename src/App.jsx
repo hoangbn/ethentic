@@ -4,12 +4,12 @@ import Profile from './components/Profile';
 import Signin from './components/Signin';
 import { UserSession } from 'blockstack';
 import { appConfig } from './assets/constants'
+require('typeface-roboto')
 
 
 const userSession = new UserSession({ appConfig });
 
 export default class App extends Component {
-
   handleSignIn(e) {
     e.preventDefault();
     userSession.redirectToSignIn();
