@@ -13,10 +13,12 @@
   "license": "MIT",
   "dependencies": {
     "blockstack": "^19.2.5",
+    "express": "^4.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^3.4.0"
+    "react-scripts": "^3.4.0",
+    "solc": "^0.6.2"
   },
   "scripts": {
     "start": "react-scripts start",

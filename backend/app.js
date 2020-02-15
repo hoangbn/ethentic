@@ -1,12 +1,10 @@
-const createError = require('http-errors');
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+require('dotenv').config();
 
 const articlesRouter = require('./routes/articles');
-
-require('dotenv').config();
 
 const app = express();
 
