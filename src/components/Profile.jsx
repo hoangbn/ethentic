@@ -5,6 +5,7 @@ import {jsonCopy, remove, add, check} from '../assets/utils'
 import { appConfig, USER_INFO_FILE } from '../assets/constants'
 import '../styles/Profile.css'
 import '../styles/NavBar.css'
+import { Link } from "react-router-dom";
 
 class Profile extends Component {
   constructor(props) {
@@ -88,34 +89,46 @@ class Profile extends Component {
         <div style={{
           display: 'flex',
           justifyContent: 'start',
-          alignItems: 'center'
+          alignItems: 'center',
+          marginLeft: '50px',
+          marginRight: '50px'
         }}>
-          <div style={{ marginRight: '50px' }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginRight: '50px',
+            height: '150px',
+            justifyContent: 'space-around',
+            alignItems: 'flex-start',
+          }}>
             <p style={{
               fontFamily: 'Roboto',
               color: '#fff',
               fontSize: '83px'
             }}>{this.state.tokenBalance}</p>
-            <p>YOUR TOKEN BALANCE</p>
+            <p style={{ fontFamily: 'Roboto', color: '#fff', marginLeft: '20px' }}>YOUR TOKEN BALANCE</p>
           </div>
           <div style={{
             display: 'flex',
             flexDirection: 'column',
             marginRight: '50px',
             height: '200px',
-            justifyContent: 'center',
+            justifyContent: 'space-around',
             alignItems: 'center'
           }}>
-            <button className="btn-white">BUY TOKENS</button>
+            <Link className="btn-white" style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              outline: 'none',
+              marginTop: '40px',
+              textDecoration: 'none'
+            }} to="/article-bet">BUY TOKENS</Link>
             <div style={{ height: '20px' }} />
             <p style={{ color: '#fff', fontFamily: 'Roboto' }}>0.035 ETH = 35 TOKENS</p>
           </div>
           <div style={{ marginLeft: '50px' }} />
-          <button className="btn-white">PLACE A BET</button>
-        </div>
-        <div>
-          
-          
+          <button className="btn-white" style={{ outline: 'none', marginBottom: '55px' }}>PLACE A BET</button>
         </div>
       </div>
   );

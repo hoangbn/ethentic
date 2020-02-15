@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './styles/App.css'
 import Profile from './components/Profile';
+import ArticleBet from './components/ArticleBet';
 import Signin from './components/Signin';
 import { UserSession } from 'blockstack';
 import { appConfig } from './assets/constants'
@@ -21,15 +22,16 @@ export default class App extends Component {
   }
 
   render() {
+    console.log('here');
     return (
-        <div className="site-wrapper">
-          <div className="site-wrapper-inner">
-            { !userSession.isUserSignedIn() ?
-                <Signin userSession={userSession} handleSignIn={ this.handleSignIn } />
-                : <Profile userSession={userSession} handleSignOut={ this.handleSignOut } />
-            }
-          </div>
+      <div className="site-wrapper">
+        <div className="site-wrapper-inner">
+          { !userSession.isUserSignedIn() ?
+              <Signin userSession={userSession} handleSignIn={ this.handleSignIn } />
+              : <Profile userSession={userSession} handleSignOut={ this.handleSignOut } />
+          }
         </div>
+      </div>
     );
   }
 
