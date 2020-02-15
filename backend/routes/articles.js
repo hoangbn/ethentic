@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const { title, content } = req.body;
-    const newArticle = new Article({title, content, userReviewCount: 0});
+    const newArticle = new Article({title, content });
     newArticle.save()
         .then(article => res.send(article))
         .catch(err => res.status(500).send(err));
