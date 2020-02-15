@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+//Turn this into a function
 import web3 from '../web3';
 import ipfs from '../ipfs';
 import storehash from '../storehash';
 
-export default class MetaMask extends Component {
+class MetaMask extends Component {
  
     state = {
       ipfsHash:null,
@@ -58,4 +58,3 @@ export default class MetaMask extends Component {
                 }); //storehash 
               }) //await ipfs.add 
             }; 
-          }
