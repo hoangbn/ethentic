@@ -13,6 +13,8 @@
   "license": "MIT",
   "dependencies": {
     "blockstack": "^19.2.5",
+    "express": "^4.17.1",
+    "ipfs-mini": "^1.1.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^4.3.1",
