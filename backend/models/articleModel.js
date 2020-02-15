@@ -6,7 +6,7 @@ const articleSchema = new Schema({
     title: String,
     content: String,
     userReviewCount: { type: Number, default: 0 },
-    truthPercentage: Number,
+    isTrue: Boolean,
     closed: { type: Boolean, default: false },
 });
 
