@@ -1,0 +1,11 @@
+ 
+.intro {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  max-width: 330px;
+  margin: auto;
+  padding: 40px 15px;
+}
