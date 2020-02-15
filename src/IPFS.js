@@ -11,6 +11,7 @@ ipfs.add(randomData, (err, hash) => {
  
  console.log('HASH:', hash);
 });
+
 /* use this to query
 const IPFS = require(‘ipfs-mini’);
 const ipfs = new IPFS({host: ‘ipfs.infura.io’, port: 5001, protocol: ‘https’});

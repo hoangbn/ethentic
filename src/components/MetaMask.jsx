@@ -1,15 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom'
-import App from './App';
-import 'bootstrap/dist/css/bootstrap.css'
 import web3 from './web3';
 import ipfs from './ipfs';
 import storehash from './storehash';
 
-ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
-
-class App extends Component {
+class MetaMask extends Component {
  
     state = {
       ipfsHash:null,
