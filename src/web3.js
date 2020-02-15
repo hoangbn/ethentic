@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import './App.css';
-import web3 from './web3';
-import ipfs from './ipfs';
-import storehash from './storehash';
+import Web3 from 'web3';
 
+const web3 = new Web3(window.web3.currentProvider);
+export default web3;
