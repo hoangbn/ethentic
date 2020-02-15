@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import web3 from '../web3';
-import ipfs from '../ipfs';
-import storehash from '../storehash';
+import web3 from '../utils/web3';
+import storehash from '../utils/storehash';
+const Ipfs = require('ipfs-mini');
 
 export default class MetaMask extends Component {
  
@@ -32,6 +32,7 @@ export default class MetaMask extends Component {
                 console.log(error);
               } //catch
           } //onClick
+
         onSubmit = async (event) => {
               event.preventDefault();
              //bring in user's metamask account address
@@ -39,7 +40,7 @@ export default class MetaMask extends Component {
              
               console.log('Sending from Metamask account: ' + accounts[0]);
             //obtain contract address from storehash.js
-              const ethAddress= await storehash.options.address;
+              const ethAddress = await storehash.options.address;
               this.setState({ethAddress});
             //save document to IPFS,return its hash#, and set hash# to state
               await ipfs.add(this.state.buffer, (err, ipfsHash) => {
