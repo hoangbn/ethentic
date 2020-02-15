@@ -1,41 +1,29 @@
-const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
+const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const cors = require('cors');
+require('dotenv').config();
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
+const articlesRouter = require('./routes/articles');
 
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+const uri = process.env.ATLAS_URI;
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => console.log("MongoDB connection established"));
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.use('/api/articles', articlesRouter);
+
+const port = process.env.PORT || 5000;
+
+app.listen(port, (err) => {
+  if (err) console.log(err);
+  else console.log(`Server is running on port: ${port}`);
 });
-
-// error handler
-app.use(function(err, req, res) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
