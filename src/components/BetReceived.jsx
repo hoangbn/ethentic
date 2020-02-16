@@ -15,7 +15,7 @@ export default class BetReceived extends Component {
             articleIsTrueML,
             articleTitle,
             articleSources
-        } = this.props.location
+        } = this.props.location;
 
         return (
             <div style={{

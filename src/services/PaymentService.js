@@ -1,11 +1,22 @@
 import web3 from '../utils/web3';
 
 const ETH_ADDRESS = '0x41B398EA4497c8484bF243D62A761046aF25B5Df';
-const WEI_TO_ETHER = 10**18;
+const ETHER_TO_WEI = 10**18;
+const TOKEN_TO_DOLLAR = 1;
+const PAYBACK = 0.7;
+const DOLLAR_TO_ETHER = 0.0028;
 //const desiredNetwork = '4'; // '1' is the Ethereum main network ID.
-const value = WEI_TO_ETHER * 44;
 
 export default class PaymentService {
+  static calculateFee(tokens) {
+    console.log("CALCULATE" + tokens);
+    return tokens * TOKEN_TO_DOLLAR * DOLLAR_TO_ETHER * ETHER_TO_WEI;
+  }
+
+  static calculateDollarFee(dollars) {
+    return dollars * DOLLAR_TO_ETHER * ETHER_TO_WEI;
+  }
+
   static isEthereumCompatible() {
     if (typeof window.ethereum === 'undefined') {
       alert('Looks like you need a Dapp browser to get started.');
@@ -15,7 +26,8 @@ export default class PaymentService {
     return true;
   }
 
-  static receivePayment() {
+  static receivePayment(value) {
+    console.log("HEYYY " + value);
     if (!this.isEthereumCompatible()) return;
     let ethereum = window.ethereum;
     // ask user to sign in and reveal their accounts with MetaMask
@@ -37,14 +49,15 @@ export default class PaymentService {
           //}
           // suggest transactions and signatures:
           const account = accounts[0];
-          this.sendPayment(account, ETH_ADDRESS, function (err, transaction) {
+          this.sendPayment(account, ETH_ADDRESS, value, function (err, transaction) {
             if (err) return alert(`An error has occurred!`);
             alert('Purchase Successful!')
           })
         });
   }
 
-  static sendPayment(sendingAccount, receivingAccount, callback) {
+  static sendPayment(sendingAccount, receivingAccount, value, callback) {
+    console.log("2 " + value);
     if (!this.isEthereumCompatible()) return;
     let ethereum = window.ethereum;
 
@@ -53,7 +66,7 @@ export default class PaymentService {
     const parameters = {
       from: sendingAccount,
       to: receivingAccount,
-      value: value,
+      value
     };
 
     // Now putting it all together into an RPC request:
