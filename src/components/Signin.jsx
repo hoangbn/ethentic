@@ -19,6 +19,9 @@ class Signin extends Component {
               className="btn-emerald"
               id="signin-button"
               onClick={ handleSignIn.bind(this) }
+              style={{
+                outline: 'none'
+              }}
             >
               Sign In with Blockstack
             </button>

@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
-import betReceivedImg from '../assets/bet-received.png';
+import { Link } from "react-router-dom";
+import NavBar from './NavBar'
+import correct from '../assets/correct.png';
+import incorrect from '../assets/incorrect.png';
 
 export default class BetReceived extends Component {
     render() {
-        let articleTitle = `CDC Recommends Also Wearing Face Mask On Back Of Head In Case Coronavirus Attacks From Rear`
-        let source = 'The Onion'
-
-        const { username, user, signOut } = this.props.location;
+        const {
+            username,
+            user,
+            signOut,
+            tokenBalance,
+            articleIsTrue,
+            articleIsTrueML,
+            articleTitle,
+            articleSources
+        } = this.props.location
 
         return (
             <div style={{
@@ -18,7 +27,7 @@ export default class BetReceived extends Component {
                 backgroundColor: '#36B069'
             }}>
                 {/* <NavBar username={username} user={user} signOut={signOut}/> */}
-                <img src={betReceivedImg} style={{
+                <img src={articleIsTrue === articleIsTrueML ? correct : incorrect} style={{
                     marginTop: '75px',
                     height: '100px',
                     width: '100px',
@@ -29,19 +38,14 @@ export default class BetReceived extends Component {
                     color: '#fff',
                     marginTop: '10px',
                     fontWeight: 'bold'
-                }}>Bet received!</p>
-                <p style={{
-                    fontFamily: 'Roboto',
-                    fontSize: '16px',
-                    color: '#fff',
-                }}>Outcomes will appear in 2-5 hours.</p>
+                }}>{articleIsTrue === articleIsTrueML ? 'Good judgement!' : 'Maybe next time 😢'}</p>
                 <div>
                     <p style={{
                         fontFamily: 'Roboto',
-                        fontSize: '14px',
+                        fontSize: '16px',
                         color: '#fff',
                         marginTop: '35px'
-                    }}>Here's some more information about the article you just read:</p>
+                    }}>Here is some more information about the article you just read:</p>
                     <div style={{
                         width: '60vw',
                         backgroundColor: '#fff',
@@ -61,8 +65,61 @@ export default class BetReceived extends Component {
                             fontFamily: 'Roboto',
                             fontSize: '14px',
                             color: '#707571',
-                        }}>{source}</i>
+                        }}>{articleSources}</i>
                     </div>
+                </div>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row'
+                }}>
+                    <Link className="btn-white" style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        outline: 'none',
+                        marginTop: '40px',
+                        marginBottom: '55px',
+                        marginRight: '25px',
+                        textDecoration: 'none',
+                    }} to={{
+                        pathname: '/',
+                        username: username,
+                        user: user,
+                        signOut: signOut,
+                    }}>Back to Dashboard</Link>
+                    <Link className="btn-white" style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        outline: 'none',
+                        marginTop: '40px',
+                        marginBottom: '55px',
+                        marginLeft: '25px',
+                        marginRight: '25px',
+                        textDecoration: 'none',
+                    }} to={{
+                        pathname: '/article-bet',
+                        username: username,
+                        user: user,
+                        signOut: signOut,
+                        tokenBalance: tokenBalance
+                    }}>Bet Again</Link>
+                    <Link className="btn-white" style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        outline: 'none',
+                        marginTop: '40px',
+                        marginBottom: '55px',
+                        marginLeft: '25px',
+                        textDecoration: 'none'
+                    }} to={{
+                        pathname: '/heyheyy',
+                        username: username,
+                        user: user,
+                        signOut: signOut,
+                        tokenBalance: tokenBalance
+                    }}>FREE ETHER (LIMITED)</Link>
                 </div>
             </div>
         );

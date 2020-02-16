@@ -27,7 +27,6 @@ class NavBar extends Component {
               onClick={this.props.signOut.bind(this)}
             ><p>Sign out</p>
             </div>
-
           </nav>
         )
     }

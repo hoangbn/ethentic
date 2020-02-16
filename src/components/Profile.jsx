@@ -4,9 +4,12 @@ import NavBar from './NavBar'
 import {jsonCopy, remove, check} from '../assets/utils'
 import PaymentService from '../services/PaymentService';
 import { appConfig, USER_INFO_FILE } from '../assets/constants'
+import { Link } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 import '../styles/Profile.css'
 import '../styles/NavBar.css'
-import { Link } from "react-router-dom";
 
 class Profile extends Component {
   constructor(props) {
@@ -15,7 +18,8 @@ class Profile extends Component {
   	this.state = {
       tasks: [],
       value: '',
-      tokenBalance: 100000.00
+      tokenBalance: 100000.00,
+      show: false
     };
 
     this.loadTasks = this.loadTasks.bind(this);
@@ -94,7 +98,7 @@ class Profile extends Component {
           <div style={{
             display: 'flex',
             flexDirection: 'column',
-            marginRight: '50px',
+            marginRight: '75px',
             height: '150px',
             justifyContent: 'space-around',
             alignItems: 'flex-start',
@@ -121,9 +125,9 @@ class Profile extends Component {
               outline: 'none',
               marginTop: '40px',
               textDecoration: 'none'
-            }} to={{
+            }} onClick={() => this.setState({ show: true })} to={{
               pathname: '/'
-            }}>BUY TOKENS</Link>
+            }} >Buy Tokens</Link>
             <div style={{ height: '20px' }} />
             <p style={{ color: '#fff', fontFamily: 'Roboto' }}>0.035 ETH = 35 TOKENS</p>
           </div>
@@ -141,8 +145,38 @@ class Profile extends Component {
             user: person,
             signOut: this.props.handleSignOut,
             tokenBalance: this.state.tokenBalance
-          }}>PLACE A BET</Link>
+          }}>Place a Bet</Link>
         </div>
+        <Modal show={this.state.show} onHide={() => {
+              console.log('hidden')
+              this.setState({ show: false })
+          }}>
+              <Modal.Header closeButton>
+                  <Modal.Title>How many tokens do you want to buy?</Modal.Title>
+                  </Modal.Header>
+                    <div style={{
+                      margin: '20px 100px 20px 100px',
+                    }}>
+                      <Form.Control ref={i => this.inputNode = i} type="text" placeholder="20" />
+                    </div>
+                  <Modal.Footer>
+                  <Button variant="secondary" onClick={() => {
+                      this.setState({ show: false })
+                      this.inputNode = null
+                  }}>
+                      Close
+                  </Button>
+                  <Button variant="success" onClick={(e) => {
+                    if (this.inputNode.value || Number.isInteger(this.inputNode.value)) {
+                      this.setState({ show: false, articleIsTrue: true })
+                      console.log(this.inputNode.value)
+                    }
+                    // buy ether
+                  }}>
+                      Save Changes
+                  </Button>
+              </Modal.Footer>
+          </Modal>
       </div>
   );
   }

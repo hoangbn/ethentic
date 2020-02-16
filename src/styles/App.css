@@ -85,3 +85,7 @@ body {
   padding-left: 20px;
   margin-bottom: 20px;
 }
+
+.btn-primary {
+  background-color: #36B069;
+}
