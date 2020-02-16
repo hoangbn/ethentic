@@ -40,6 +40,11 @@ class ArticleBet extends Component {
     render() {
         console.log(this.props);
 
+        const { _id, title, content, isTrue, source } = this.props.location.state.randomArticle;
+        console.log(title)
+        console.log(content)
+        console.log(isTrue)
+
         console.log(this.articleTitles);
         const { userSession } = this.props.globalContext.state;
         let tokenBalance = 0;
@@ -140,7 +145,7 @@ class ArticleBet extends Component {
                         lineHeight: 2,
                         color: '#707571',
                     }}>
-                        {/* {`${this.articleTitles[randomArticle]toUpperCase()}\n\n${this.articleContents[randomArticle]}`} */}
+                        {`${title}\n\n${content}`}
                     </textarea>
                     <div style={{
                         display: 'flex',
@@ -177,7 +182,7 @@ class ArticleBet extends Component {
                     this.setState({ show: false })
                 }}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{this.articleTitles[randomArticle]}</Modal.Title>
+                    <Modal.Title>{title}</Modal.Title>
                     </Modal.Header>
                         <Modal.Body>{articleIsTrue ? 'Yes, I trust this.' : `No, I don't trust this.`}</Modal.Body>
                     <Modal.Footer>
@@ -191,12 +196,13 @@ class ArticleBet extends Component {
                             // username: username,
                             // user: user,
                             articleIsTrue,
-                            articleIsTrueML: this.articleMLTruths[randomArticle],
-                            articleTitle: this.articleTitles[randomArticle],
-                            articleSources: this.articleSources[randomArticle]
+                            articleIsTrueML: isTrue,
+                            articleTitle: title,
+                            articleSource: source
                         }}>
                             <Button variant="success" onClick={() => {
                                 this.setState({ show: false, articleIsTrue: true })
+                                UserService.spendToken(userSession, _id)
                             }}>
                                 Save Changes
                             </Button>

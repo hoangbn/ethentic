@@ -3,8 +3,39 @@ import { Link } from "react-router-dom";
 import NavBar from './NavBar'
 import correct from '../assets/correct.png';
 import incorrect from '../assets/incorrect.png';
+import ArticleService from "../services/ArticleService";
+
 
 export default class BetReceived extends Component {
+    async placeBet() {
+        let randomArticle = {}
+        if (this.props.location.tokenBalance <= 0) return alert("Please buy more tokens");
+        try {
+          randomArticle = await ArticleService.getRandomArticle(this.props.userSession, 2);
+          // randomArticleTemp = {
+          //   userReviewCount: 0,
+          //   userTrueCount: 0,
+          //   closed: false,
+          //   _id: `5e49531e390ad21e02da5fda`,
+          //   title: 213123213213,
+          //   content: `Epstein alive while in the Metropolitan Correctional Center in Manhattan. He also is friends with Bill and Hillary Clinton.`,
+          //   isTrue: false,
+          //   __v: 0
+          // }
+          // console.log(randomArticleTemp)
+          console.log(randomArticle);
+        } catch (err) {
+          console.log(err);
+        }
+        this.props.history.push({
+          pathname: '/article-bet',
+          state: { 
+            tokenBalance: this.state.tokenBalance,
+            randomArticle
+          },
+        })
+    }
+
     render() {
         const {
             username,
@@ -14,7 +45,7 @@ export default class BetReceived extends Component {
             articleIsTrue,
             articleIsTrueML,
             articleTitle,
-            articleSources
+            articleSource
         } = this.props.location;
 
         return (
@@ -65,7 +96,7 @@ export default class BetReceived extends Component {
                             fontFamily: 'Roboto',
                             fontSize: '14px',
                             color: '#707571',
-                        }}>{articleSources}</i>
+                        }}>{articleSource}</i>
                     </div>
                 </div>
                 <div style={{
@@ -97,13 +128,7 @@ export default class BetReceived extends Component {
                         marginLeft: '25px',
                         marginRight: '25px',
                         textDecoration: 'none',
-                    }} to={{
-                        pathname: '/article-bet',
-                        username: username,
-                        user: user,
-                        signOut: signOut,
-                        tokenBalance: tokenBalance
-                    }}>Bet Again</Link>
+                    }} onClick={() => this.placeBet()}>Bet Again</Link>
                     <Link className="btn-white" style={{
                         display: 'flex',
                         justifyContent: 'center',
