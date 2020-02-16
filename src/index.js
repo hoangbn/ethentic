@@ -11,6 +11,7 @@ import App from './App';
 import ArticleBet from './components/ArticleBet';
 import 'bootstrap/dist/css/bootstrap.css'
 import BetReceived from './components/BetReceived';
+import Credits from './components/Credits';
 
 const main = () => {
     return (
@@ -21,6 +22,7 @@ const main = () => {
                 <Route exact path="/" component={withRouter(App)} />
                 <Route exact path="/article-bet" component={withRouter(ArticleBet)} />
                 <Route exact path="/bet-received" component={withRouter(BetReceived)} />
+                <Route exact path="/heyheyy" component={withRouter(Credits)} />
             </Switch>
         </Router>
     );

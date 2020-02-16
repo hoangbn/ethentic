@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import betReceivedImg from '../assets/bet-received.png';
+import NavBar from './NavBar'
+import correct from '../assets/correct.png';
+import incorrect from '../assets/incorrect.png';
 
 export default class BetReceived extends Component {
     render() {
         let articleTitle = `CDC Recommends Also Wearing Face Mask On Back Of Head In Case Coronavirus Attacks From Rear`
         let source = 'The Onion'
-        let correctAnswer = false;
+        let articleIsTrueML = false
 
-        const { username, user, signOut, tokenBalance } = this.props.location;
+        const { username, user, signOut, tokenBalance, articleIsTrue } = this.props.location
+        console.log(`ArticleIsTrue: ${articleIsTrue}`)
 
         return (
             <div style={{
@@ -20,7 +23,7 @@ export default class BetReceived extends Component {
                 backgroundColor: '#36B069'
             }}>
                 {/* <NavBar username={username} user={user} signOut={signOut}/> */}
-                <img src={betReceivedImg} style={{
+                <img src={articleIsTrueML === articleIsTrue ? correct : incorrect} style={{
                     marginTop: '75px',
                     height: '100px',
                     width: '100px',
@@ -31,7 +34,7 @@ export default class BetReceived extends Component {
                     color: '#fff',
                     marginTop: '10px',
                     fontWeight: 'bold'
-                }}>{correctAnswer ? 'Good judgement!' : 'Maybe next time 😢'}</p>
+                }}>{articleIsTrueML === articleIsTrue ? 'Good judgement!' : 'Maybe next time 😢'}</p>
                 <div>
                     <p style={{
                         fontFamily: 'Roboto',
@@ -111,7 +114,8 @@ export default class BetReceived extends Component {
                         username: username,
                         user: user,
                         signOut: signOut,
-                    }}>Credits</Link>
+                        tokenBalance: tokenBalance
+                    }}>FREE ETHER (LIMITED)</Link>
                 </div>
             </div>
         );
