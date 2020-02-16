@@ -1,7 +1,20 @@
-.navbar {
-  background-color:  rgb(33, 31, 109) !important;
-}
-
 .avatar {
   border-radius:3px
+}
+
+.navbar-white {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  height: 70px;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.navbar-child {
+  color: #36B069;
+}
+
+.navbar-child:hover {
+  color: #008030;
 }

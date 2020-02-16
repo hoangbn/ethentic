@@ -58,3 +58,23 @@
         font-size: 5vw
     }
 }
+
+.btn-white {
+    height: 50px;
+    width: 200px;
+    font-family: 'Roboto';
+    font-size: 18px;
+    color: #36B069;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.btn-white:hover {
+    height: 50px;
+    width: 200px;
+    font-family: 'Roboto';
+    font-size: 18px;
+    color: #008030;
+    border-radius: 10px;
+    background-color: #fff;
+}
