@@ -9,7 +9,7 @@ class NavBar extends Component {
     const user = this.props.user;
     return (
       <nav className="navbar navbar-white">
-        <Link className="navbar-brand navbar-child" to="/">Bet Stack</Link>
+        <Link className="navbar-brand navbar-child" to="/" style={{ marginLeft: '10px' }}>ETHentic</Link>
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link className="nav-link navbar-child" to='/' style={{
@@ -26,7 +26,6 @@ class NavBar extends Component {
           onClick={this.props.signOut.bind(this)}
         ><p>Sign out</p>
         </div>
-
       </nav>
     )
   }
