@@ -56,17 +56,32 @@ class Profile extends Component {
   }
 
   async placeBet() {
+    let randomArticleTemp = {}
     if (this.state.tokenBalance <= 0) return alert("Please buy more tokens");
     try {
-      const randomArticle = await ArticleService.getRandomArticle(this.props.userSession, 2);
-      console.log(randomArticle);
+      //const randomArticle = await ArticleService.getRandomArticle(this.props.userSession, 2);
+      randomArticleTemp = {
+        userReviewCount: 0,
+        userTrueCount: 0,
+        closed: false,
+        _id: `5e49531e390ad21e02da5fda`,
+        title: 213123213213,
+        content: `Epstein alive while in the Metropolitan Correctional Center in Manhattan. He also is friends with Bill and Hillary Clinton.`,
+        isTrue: false,
+        __v: 0
+      }
+      console.log(randomArticleTemp)
+      //console.log(randomArticle);
     } catch (err) {
       console.log(err);
     }
-    // this.props.history.push({
-    //   pathname: '/article-bet',
-    //   state: { tokenBalance: this.state.tokenBalance }
-    // })
+    this.props.history.push({
+      pathname: '/article-bet',
+      state: { 
+        tokenBalance: this.state.tokenBalance,
+        randomArticle: randomArticleTemp
+      },
+    })
   }
 
   render() {

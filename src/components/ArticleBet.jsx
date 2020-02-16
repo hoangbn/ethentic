@@ -26,27 +26,10 @@ class ArticleBet extends Component {
             true
         ];
 
-        //localStorage.setItem('seenArticles', JSON.stringify([]))
-        this.seenArticles = JSON.parse(localStorage.getItem('seenArticles')) || [];
-        console.log(this.seenArticles);
-
-        let randomArticle = 0;
-
-        console.log(this.seenArticles.length);
-        console.log(this.articleTitles.length);
-
-        if (this.seenArticles.length !== this.articleTitles.length) {
-            randomArticle = this.getRandomInt(this.articleTitles.length);
-            while (this.seenArticles.includes(randomArticle)) {
-                randomArticle = this.getRandomInt(this.articleTitles.length);
-            }
-        }
-
         this.state = {
             show: false,
             articleIsTrue: true,
             tokenFee: 1,
-            randomArticle
         }
     }
 
@@ -55,53 +38,54 @@ class ArticleBet extends Component {
     };
 
     render() {
+        console.log(this.props);
+
         console.log(this.articleTitles);
         const { userSession } = this.props.globalContext.state;
-        console.log(this.props);
         let tokenBalance = 0;
         if (this.props.location.state) {
             const { username, user, tokenBalance } = this.props.location.state;
         }
         const { show, articleIsTrue, tokenFee, randomArticle } = this.state;
 
-        if (this.seenArticles.length === this.articleTitles.length) {
-            return (
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    minHeight: '100vh',
-                    backgroundColor: '#36B069'
-                }}>
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        marginTop: '50px'
-                    }}>
-                        <p style={{
-                            fontFamily: 'Roboto',
-                            color: '#fff',
-                            fontSize: '30px'
-                        }}>You've completed all the questions, great job! 🎉🎉🎉</p>
-                        <Link className="btn-white" style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            outline: 'none',
-                            marginTop: '25px',
-                            marginBottom: '55px',
-                            marginRight: '25px',
-                            textDecoration: 'none',
-                        }} to={{
-                            pathname: '/',
-                            userSession: userSession
-                        }} onClick={() => localStorage.setItem('seenArticles', JSON.stringify([]))}>
-                            Restart Demo
-                        </Link>
-                    </div>
-                </div>
-            )
-        }
+        // if (Object.keys(randomArticle) === 0) {
+        //     return (
+        //         <div style={{
+        //             display: 'flex',
+        //             flexDirection: 'column',
+        //             minHeight: '100vh',
+        //             backgroundColor: '#36B069'
+        //         }}>
+        //             <div style={{
+        //                 display: 'flex',
+        //                 flexDirection: 'column',
+        //                 alignItems: 'center',
+        //                 marginTop: '50px'
+        //             }}>
+        //                 <p style={{
+        //                     fontFamily: 'Roboto',
+        //                     color: '#fff',
+        //                     fontSize: '30px'
+        //                 }}>You've completed all the questions, great job! 🎉🎉🎉</p>
+        //                 <Link className="btn-white" style={{
+        //                     display: 'flex',
+        //                     justifyContent: 'center',
+        //                     alignItems: 'center',
+        //                     outline: 'none',
+        //                     marginTop: '25px',
+        //                     marginBottom: '55px',
+        //                     marginRight: '25px',
+        //                     textDecoration: 'none',
+        //                 }} to={{
+        //                     pathname: '/',
+        //                     userSession: userSession
+        //                 }}>
+        //                     Restart Demo
+        //                 </Link>
+        //             </div>
+        //         </div>
+        //     )
+        // }
 
 
         return (
@@ -156,7 +140,7 @@ class ArticleBet extends Component {
                         lineHeight: 2,
                         color: '#707571',
                     }}>
-                        {`${this.articleTitles[randomArticle].toUpperCase()}\n\n${this.articleContents[randomArticle]}`}
+                        {/* {`${this.articleTitles[randomArticle]toUpperCase()}\n\n${this.articleContents[randomArticle]}`} */}
                     </textarea>
                     <div style={{
                         display: 'flex',
@@ -212,10 +196,7 @@ class ArticleBet extends Component {
                             articleSources: this.articleSources[randomArticle]
                         }}>
                             <Button variant="success" onClick={() => {
-                                this.setState({ show: false, articleIsTrue: true });
-                                let temp = this.seenArticles;
-                                temp.push(randomArticle);
-                                localStorage.setItem('seenArticles', JSON.stringify(temp))
+                                this.setState({ show: false, articleIsTrue: true })
                             }}>
                                 Save Changes
                             </Button>
