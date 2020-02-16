@@ -7,6 +7,7 @@ const articleSchema = new Schema({
     content: String, 
     source: String,
     userReviewCount: { type: Number, default: 0 },
+    userTrueCount: { type: Number, default: 0 },
     isTrue: Boolean,
     closed: { type: Boolean, default: false },
 });
