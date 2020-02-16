@@ -25,12 +25,27 @@ export default class ArticleBet extends Component {
             true
         ]
 
+        //localStorage.setItem('seenArticles', JSON.stringify([]))
+        this.seenArticles = JSON.parse(localStorage.getItem('seenArticles')) || []
+        console.log(this.seenArticles)
+
+        let randomArticle = 0
+
+        console.log(this.seenArticles.length)
+        console.log(this.articleTitles.length)
+
+        if (this.seenArticles.length !== this.articleTitles.length) {
+            randomArticle = this.getRandomInt(this.articleTitles.length)
+            while (this.seenArticles.includes(randomArticle)) {
+                randomArticle = this.getRandomInt(this.articleTitles.length);
+            }
+        }
+
         this.state = {
             show: false,
             articleIsTrue: true,
             tokenFee: 5,
-            randomArticle: this.getRandomInt(this.articleTitles.length)
-
+            randomArticle
         }
     }
 
@@ -44,7 +59,47 @@ export default class ArticleBet extends Component {
         const { username, user, signOut, tokenBalance } = this.props.location;
         const { show, articleIsTrue, tokenFee, randomArticle } = this.state
 
-        console.log(this.state.articleIsTrue);
+        if (this.seenArticles.length === this.articleTitles.length) {
+            return (
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minHeight: '100vh',
+                    backgroundColor: '#36B069'
+                }}>
+                    <NavBar username={username} user={user} signOut={signOut}/>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        marginTop: '50px'
+                    }}>
+                        <p style={{
+                            fontFamily: 'Roboto',
+                            color: '#fff',
+                            fontSize: '30px'
+                        }}>You've completed all the questions, great job! 🎉🎉🎉</p>
+                        <Link className="btn-white" style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            outline: 'none',
+                            marginTop: '25px',
+                            marginBottom: '55px',
+                            marginRight: '25px',
+                            textDecoration: 'none',
+                        }} to={{
+                            pathname: '/',
+                            username: username,
+                            user: user,
+                            signOut: signOut,
+                        }} onClick={() => localStorage.setItem('seenArticles', JSON.stringify([]))}>
+                            Restart Demo
+                        </Link>
+                    </div>
+                </div>
+            )
+        }
 
         return (
             <div style={{
@@ -131,11 +186,11 @@ export default class ArticleBet extends Component {
                     console.log('hidden')
                     this.setState({ show: false })
                 }}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>{this.articleTitles[randomArticle]}</Modal.Title>
-                        </Modal.Header>
-                            <Modal.Body>{articleIsTrue ? 'Yes, I trust this.' : `No, I don't trust this.`}</Modal.Body>
-                        <Modal.Footer>
+                <Modal.Header closeButton>
+                    <Modal.Title>{this.articleTitles[randomArticle]}</Modal.Title>
+                    </Modal.Header>
+                        <Modal.Body>{articleIsTrue ? 'Yes, I trust this.' : `No, I don't trust this.`}</Modal.Body>
+                    <Modal.Footer>
                         <Button variant="secondary" onClick={() => {
                             this.setState({ show: false })
                         }}>
@@ -154,6 +209,9 @@ export default class ArticleBet extends Component {
                         }}>
                             <Button variant="success" onClick={() => {
                                 this.setState({ show: false, articleIsTrue: true })
+                                let temp = this.seenArticles
+                                temp.push(randomArticle)
+                                localStorage.setItem('seenArticles', JSON.stringify(temp))
                             }}>
                                 Save Changes
                             </Button>
