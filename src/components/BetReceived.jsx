@@ -108,7 +108,7 @@ export default class BetReceived extends Component {
                         marginTop: '40px',
                         marginBottom: '55px',
                         marginLeft: '25px',
-                        textDecoration: 'none',
+                        textDecoration: 'none'
                     }} to={{
                         pathname: '/heyheyy',
                         username: username,

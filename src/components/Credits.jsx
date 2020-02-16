@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import Sound from 'react-sound';
 import easterEgg from '../assets/easterEgg.png'
 import easterEggSound from '../assets/easterEgg.mp3';
-
-const Sound = require('react-sound').default;
 
 export default class Credits extends Component {
     render() {
@@ -18,6 +17,10 @@ export default class Credits extends Component {
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
+                <Sound
+                    url={easterEggSound}
+                    playStatus={Sound.status.PLAYING}
+                />
                 <p style={{
                     fontFamily: 'Roboto',
                     fontSize: '24px',
@@ -34,7 +37,7 @@ export default class Credits extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                     outline: 'none',
-                    marginTop: '75px',
+                    marginTop: '50px',
                     marginLeft: '25px',
                     textDecoration: 'none',
                 }} to={{
@@ -42,11 +45,7 @@ export default class Credits extends Component {
                     username: username,
                     user: user,
                     signOut: signOut,
-                }}>Shamefully walk away</Link>
-                <Sound
-                    url={easterEggSound}
-                    playStatus={Sound.status.PLAYING}
-                />
+                }}>Back to Dashboard</Link>
             </div>
         );
     }
