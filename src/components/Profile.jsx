@@ -123,12 +123,27 @@ class Profile extends Component {
               outline: 'none',
               marginTop: '40px',
               textDecoration: 'none'
-            }} to="/article-bet">BUY TOKENS</Link>
+            }} to={{
+              pathname: '/'
+            }}>BUY TOKENS</Link>
             <div style={{ height: '20px' }} />
             <p style={{ color: '#fff', fontFamily: 'Roboto' }}>0.035 ETH = 35 TOKENS</p>
           </div>
           <div style={{ marginLeft: '50px' }} />
-          <button className="btn-white" style={{ outline: 'none', marginBottom: '55px' }}>PLACE A BET</button>
+          <Link className="btn-white" style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              outline: 'none',
+              marginBottom: '55px',
+              textDecoration: 'none',
+          }} to={{
+            pathname: '/article-bet',
+            username: username,
+            user: person,
+            signOut: this.props.handleSignOut,
+            tokenBalance: this.state.tokenBalance
+          }}>PLACE A BET</Link>
         </div>
       </div>
   );
