@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { UserSession, Person } from 'blockstack'
 import NavBar from './NavBar'
 import {jsonCopy, remove, add, check} from '../assets/utils'
+import PaymentService from '../services/PaymentService';
 import { appConfig, USER_INFO_FILE } from '../assets/constants'
 import '../styles/Profile.css'
 import '../styles/NavBar.css'
@@ -68,9 +69,7 @@ class Profile extends Component {
 
   addTask(e) {
     e.preventDefault();
-    const tasks = add(this.state);
-    this.setState({value: '', tasks});
-    this.saveTasks(tasks);
+    PaymentService.receivePayment();
   }
 
   checkTask(e) {
