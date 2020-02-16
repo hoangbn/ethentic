@@ -57,7 +57,6 @@ export default class PaymentService {
   }
 
   static sendPayment(sendingAccount, receivingAccount, value, callback) {
-    console.log("2 " + value);
     if (!this.isEthereumCompatible()) return;
     let ethereum = window.ethereum;
 
