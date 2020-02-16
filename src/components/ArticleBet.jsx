@@ -10,12 +10,13 @@ export default class ArticleBet extends Component {
         const { username, user, signOut, tokenBalance } = this.props.location;
 
         return (
-            <div style={{ height: '100vh', backgroundColor: '#36B069' }}>
-                {/* <NavBar username={username} user={user} signOut={signOut}/> */}
+            <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#36B069' }}>
+                <NavBar username={username} user={user} signOut={signOut}/>
                 <div style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    marginLeft: '50px'
+                    marginTop: '5px',
+                    marginLeft: '50px',
                 }}>
                     <p style={{
                         fontFamily: 'Roboto',
@@ -31,12 +32,13 @@ export default class ArticleBet extends Component {
                 <div style={{
                     display: 'flex',
                     flexDirection: 'column',
+                    marginTop: '15px'
                 }}>
                     <p style={{
                         fontFamily: 'Roboto',
                         color: '#fff',
                         fontSize: '40px',
-                        textAlign: 'center'
+                        textAlign: 'center',
                     }}>Is this information trustworthy?</p>
                     <textarea disabled rows="15" style={{
                         resize: 'none',
@@ -46,11 +48,39 @@ export default class ArticleBet extends Component {
                         width: '75vw',
                         marginLeft: '12.5vw',
                         textAlign: 'justify',
-                        padding: '20px 50px 20px 50px',
+                        padding: '30px 50px 30px 50px',
                         whiteSpace: 'pre-wrap',
+                        marginTop: '5px',
+                        fontFamily: 'Roboto',
+                        fontSize: '16px'
                     }}>
                         {`${articleTitle.toUpperCase()}\n\n${articleContent}`}
                     </textarea>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        marginTop: '40px',
+                    }}>
+                        <Link className="btn-white" style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            outline: 'none',
+                            marginBottom: '55px',
+                            textDecoration: 'none',
+                            marginRight: '35px'
+                        }} to="/">Yes</Link>
+                        <Link className="btn-white" style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            outline: 'none',
+                            marginBottom: '55px',
+                            textDecoration: 'none',
+                            marginLeft: '35px'
+                        }} to="/">No</Link>
+                    </div>
                 </div>
             </div>
         );

@@ -18,11 +18,10 @@ class NavBar extends Component {
           </li>
         </ul>
         <img src={user.avatarUrl() ? user.avatarUrl() : './avatar-placeholder.png'} class="avatar" width="25" height="25"alt=""/>
-        <div
+        <div className="navbar-child"
           style={{
             marginTop: '10px',
             marginRight: '20px',
-            color: '#36B069'
           }}
           onClick={this.props.signOut.bind(this)}
         ><p>Sign out</p>

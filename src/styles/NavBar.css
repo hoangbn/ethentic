@@ -14,3 +14,7 @@
 .navbar-child {
   color: #36B069;
 }
+
+.navbar-child:hover {
+  color: #008030;
+}
