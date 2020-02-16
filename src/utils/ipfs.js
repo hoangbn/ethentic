@@ -5,13 +5,15 @@ const Ipfs = require('ipfs-mini');
 export const ipfs = new Ipfs({host: 'ipfs.infura.io', port: 5001, protocol: 'https'});
 
 // hashing the data
-// ipfs.add(randomData, (err, hash) => {
-//  if (err) {
-//    return console.log(err);
-//  }
-//
-//  console.log('HASH:', hash);
-// });
+ ipfs.add(PublishingData, (err, hash) => {
+  if (err) {
+    return console.log(err);
+  }
+
+  console.log('HASH:', hash);
+});
+
+
 
 // retrieving the data
 // const hash = “Qmaj3ZhZtHynXc1tpnTnSBNsq8tZihMuV34wAvpURPZZMs”;

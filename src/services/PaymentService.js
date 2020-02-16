@@ -118,3 +118,10 @@ export default class PaymentService {
 
   }
 }
+
+const repaymentValue = (UserValue, AIValue,) => {
+  if (AIValue) {
+    ReturnValue = WEI_TO_ETHER * 0.07
+    var totalValue = ReturnValue * UserValue
+  }
+};
