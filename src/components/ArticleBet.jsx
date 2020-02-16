@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import NavBar from './NavBar'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import { withGlobalContext } from "../contexts/GlobalContext";
+import UserService from "../services/UserService";
 
 export default class ArticleBet extends Component {
     constructor(props) {
@@ -101,6 +103,7 @@ export default class ArticleBet extends Component {
             )
         }
 
+
         return (
             <div style={{
                 display: 'flex',
@@ -170,7 +173,9 @@ export default class ArticleBet extends Component {
                             marginBottom: '55px',
                             textDecoration: 'none',
                             marginRight: '35px'
-                        }} onClick={() => this.setState({ show: true, articleIsTrue: true })}>Yes</button>
+                        }} onClick={() => {
+                            this.setState({show: true, articleIsTrue: true})
+                        }}>Yes</button>
                         <button className="btn-white" style={{
                             display: 'flex',
                             justifyContent: 'center',
@@ -179,7 +184,10 @@ export default class ArticleBet extends Component {
                             marginBottom: '55px',
                             textDecoration: 'none',
                             marginLeft: '35px'
-                        }} onClick={() => this.setState({ show: true, articleIsTrue: false })}>No</button>
+                        }} onClick={async () => {
+                            await UserService.test(userSession);
+                            this.setState({ show: true, articleIsTrue: false });
+                        }}>No</button>
                     </div>
                 </div>
                 <Modal show={show} onHide={() => {
@@ -222,3 +230,5 @@ export default class ArticleBet extends Component {
         );
     }
 }
+
+export default withGlobalContext(ArticleBet);

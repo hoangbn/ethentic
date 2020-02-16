@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { UserSession, Person } from 'blockstack'
 import NavBar from './NavBar'
-import {jsonCopy, remove, add, check} from '../assets/utils'
+import {jsonCopy, remove, check} from '../assets/utils'
+import PaymentService from '../services/PaymentService';
 import { appConfig, USER_INFO_FILE } from '../assets/constants'
 import { Link } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal'
@@ -72,9 +73,7 @@ class Profile extends Component {
 
   addTask(e) {
     e.preventDefault();
-    const tasks = add(this.state);
-    this.setState({value: '', tasks});
-    this.saveTasks(tasks);
+    PaymentService.receivePayment();
   }
 
   checkTask(e) {
@@ -89,7 +88,6 @@ class Profile extends Component {
     const person = new Person(profile);
     return (
       <div style={{ height: '100vh', backgroundColor: '#36B069' }}>
-        <NavBar username={username} user={person} signOut={this.props.handleSignOut}/>
         <div style={{
           display: 'flex',
           justifyContent: 'center',
