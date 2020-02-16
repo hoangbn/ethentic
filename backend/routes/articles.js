@@ -31,6 +31,7 @@ router.post('/', async (req, res) => {
 
 router.get('/random', (req, res) => {
     const { doneList } = req.query;
+    console.log(doneList);
     Article.findOne({ _id: { $nin: JSON.parse(doneList) } })
       .then(article => res.send(article))
       .catch(err => res.status(500).send(err));
