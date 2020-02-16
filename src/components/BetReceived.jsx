@@ -6,12 +6,16 @@ import incorrect from '../assets/incorrect.png';
 
 export default class BetReceived extends Component {
     render() {
-        let articleTitle = `CDC Recommends Also Wearing Face Mask On Back Of Head In Case Coronavirus Attacks From Rear`
-        let source = 'The Onion'
-        let articleIsTrueML = false
-
-        const { username, user, signOut, tokenBalance, articleIsTrue } = this.props.location
-        console.log(`ArticleIsTrue: ${articleIsTrue}`)
+        const {
+            username,
+            user,
+            signOut,
+            tokenBalance,
+            articleIsTrue,
+            articleIsTrueML,
+            articleTitle,
+            articleSources
+        } = this.props.location
 
         return (
             <div style={{
@@ -23,7 +27,7 @@ export default class BetReceived extends Component {
                 backgroundColor: '#36B069'
             }}>
                 {/* <NavBar username={username} user={user} signOut={signOut}/> */}
-                <img src={articleIsTrueML === articleIsTrue ? correct : incorrect} style={{
+                <img src={articleIsTrue === articleIsTrueML ? correct : incorrect} style={{
                     marginTop: '75px',
                     height: '100px',
                     width: '100px',
@@ -34,7 +38,7 @@ export default class BetReceived extends Component {
                     color: '#fff',
                     marginTop: '10px',
                     fontWeight: 'bold'
-                }}>{articleIsTrueML === articleIsTrue ? 'Good judgement!' : 'Maybe next time 😢'}</p>
+                }}>{articleIsTrue === articleIsTrueML ? 'Good judgement!' : 'Maybe next time 😢'}</p>
                 <div>
                     <p style={{
                         fontFamily: 'Roboto',
@@ -61,7 +65,7 @@ export default class BetReceived extends Component {
                             fontFamily: 'Roboto',
                             fontSize: '14px',
                             color: '#707571',
-                        }}>{source}</i>
+                        }}>{articleSources}</i>
                     </div>
                 </div>
                 <div style={{
