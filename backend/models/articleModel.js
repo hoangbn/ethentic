@@ -9,7 +9,7 @@ const articleSchema = new Schema({
     userReviewCount: { type: Number, default: 0 },
     userTrueCount: { type: Number, default: 0 },
     isTrue: Boolean,
-    closed: { type: Boolean, default: false },
+    closed: { type: Boolean, default: false }
 });
 
 const User = mongoose.model('Article', articleSchema);

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { UserSession, Person } from 'blockstack'
-import NavBar from './NavBar'
+import UserService from "../services/UserService";
+import ArticleService from "../services/ArticleService";
+import PaymentService from "../services/PaymentService";
 import {jsonCopy, remove, check} from '../assets/utils'
-import PaymentService from '../services/PaymentService';
 import { appConfig, USER_INFO_FILE } from '../assets/constants'
 import { Link } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal'
@@ -10,6 +11,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import '../styles/Profile.css'
 import '../styles/NavBar.css'
+import {withGlobalContext} from "../contexts/GlobalContext";
 
 class Profile extends Component {
   constructor(props) {
@@ -18,63 +20,34 @@ class Profile extends Component {
   	this.state = {
       tasks: [],
       value: '',
-      tokenBalance: 100000.00,
+      tokenBalance: 0,
+      bettingHistory: [],
       show: false
     };
 
-    this.loadTasks = this.loadTasks.bind(this);
+    this.reloadInfo = this.reloadInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.addTask = this.addTask.bind(this);
-    this.removeTask = this.removeTask.bind(this);
     this.checkTask = this.checkTask.bind(this);
+    this.placeBet = this.placeBet.bind(this);
   }
 
   componentWillMount() {
-    this.loadTasks();
+    this.reloadInfo();
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextTasks = nextProps.tasks;
-    if(nextTasks) {
-      if (nextTasks.length !== this.state.tasks.length) {
-        this.setState({ tasks: jsonCopy(nextTasks) });
-      }
-    }
-  }
-
-  loadTasks() {
-    const options = { decrypt: true };
-    this.props.userSession.getFile(USER_INFO_FILE, options)
-    .then((content) => {
-      console.log(content);
-      if(content) {
-        const tasks = JSON.parse(content);
-        this.setState({tasks});
-      } 
-    })
-  }
-
-  saveTasks(tasks) {
-    const options = { encrypt: true };
-    this.props.userSession.putFile(USER_INFO_FILE, JSON.stringify(tasks), options);
+  async reloadInfo() {
+    const userInfo = await UserService.getInfo(this.props.userSession);
+    const { numTokens, bettingHistory } = userInfo;
+    console.log("LOADING");
+    console.log(this.state);
+    this.setState({tokenBalance: numTokens ? numTokens : 0, bettingHistory });
+    console.log("LOADED");
+    console.log(this.state);
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});
    }
-
-  removeTask(e) {
-    e.preventDefault();
-    //fixed: undefined data-index from input
-    const tasks = remove(e.currentTarget.dataset.index, this.state);
-    this.setState({ tasks });
-    this.saveTasks(tasks);
-  }
-
-  addTask(e) {
-    e.preventDefault();
-    PaymentService.receivePayment();
-  }
 
   checkTask(e) {
     const tasks = check(e.target.dataset.index, this.state);
@@ -82,9 +55,39 @@ class Profile extends Component {
     this.saveTasks(tasks);
   }
 
+  async placeBet() {
+    let randomArticle = {}
+    if (this.state.tokenBalance <= 0) return alert("Please buy more tokens");
+    try {
+      randomArticle = await ArticleService.getRandomArticle(this.props.userSession, 2);
+      // randomArticleTemp = {
+      //   userReviewCount: 0,
+      //   userTrueCount: 0,
+      //   closed: false,
+      //   _id: `5e49531e390ad21e02da5fda`,
+      //   title: 213123213213,
+      //   content: `Epstein alive while in the Metropolitan Correctional Center in Manhattan. He also is friends with Bill and Hillary Clinton.`,
+      //   isTrue: false,
+      //   __v: 0
+      // }
+      // console.log(randomArticleTemp)
+      console.log(randomArticle);
+    } catch (err) {
+      console.log(err);
+    }
+    this.props.history.push({
+      pathname: '/article-bet',
+      state: { 
+        tokenBalance: this.state.tokenBalance,
+        randomArticle
+      },
+    })
+  }
+
   render() {
-    const username = this.props.userSession.loadUserData().username;
-    const profile = this.props.userSession.loadUserData();
+    const { userSession } = this.props;
+    const profile = userSession.loadUserData();
+    const { username } = profile;
     const person = new Person(profile);
     return (
       <div style={{ height: '100vh', backgroundColor: '#36B069' }}>
@@ -129,26 +132,19 @@ class Profile extends Component {
               pathname: '/'
             }} >Buy Tokens</Link>
             <div style={{ height: '20px' }} />
-            <p style={{ color: '#fff', fontFamily: 'Roboto' }}>0.035 ETH = 35 TOKENS</p>
+            <p style={{ color: '#fff', fontFamily: 'Roboto' }}>10 TOKENS = 0.028 ETH</p>
           </div>
           <div style={{ marginLeft: '50px' }} />
-          <Link className="btn-white" style={{
+          <button className="btn-white" style={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               outline: 'none',
               marginBottom: '55px',
               textDecoration: 'none',
-          }} to={{
-            pathname: '/article-bet',
-            username: username,
-            user: person,
-            signOut: this.props.handleSignOut,
-            tokenBalance: this.state.tokenBalance
-          }}>Place a Bet</Link>
+          }} onClick={() => this.placeBet()}>Place a Bet</button>
         </div>
         <Modal show={this.state.show} onHide={() => {
-              console.log('hidden')
               this.setState({ show: false })
           }}>
               <Modal.Header closeButton>
@@ -157,21 +153,22 @@ class Profile extends Component {
                     <div style={{
                       margin: '20px 100px 20px 100px',
                     }}>
-                      <Form.Control ref={i => this.inputNode = i} type="text" placeholder="20" />
+                      <Form.Control ref={i => this.inputNode = i} type="text" placeholder="Enter number of tokens you want to buy" required />
                     </div>
                   <Modal.Footer>
                   <Button variant="secondary" onClick={() => {
-                      this.setState({ show: false })
+                      this.setState({ show: false });
                       this.inputNode = null
                   }}>
                       Close
                   </Button>
-                  <Button variant="success" onClick={(e) => {
-                    if (this.inputNode.value || Number.isInteger(this.inputNode.value)) {
-                      this.setState({ show: false, articleIsTrue: true })
-                      console.log(this.inputNode.value)
+                  <Button variant="success" onClick={async (e) => {
+                    if (this.inputNode.value && Number.isInteger(parseInt(this.inputNode.value))) {
+                      this.setState({ show: false, articleIsTrue: true });
+                      await PaymentService.receivePayment(PaymentService.calculateFee(this.inputNode.value));
+                      await UserService.addTokens(userSession, this.inputNode.value);
+                      this.reloadInfo();
                     }
-                    // buy ether
                   }}>
                       Save Changes
                   </Button>
@@ -189,4 +186,4 @@ Profile.defaultProps = {
   userSession: new UserSession(appConfig)
 };
 
-export default Profile
+export default Profile;
