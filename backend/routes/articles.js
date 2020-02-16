@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const { title, content, isTrue } = req.body;
-    const newArticle = new Article({title, content, isTrue });
+    const { title, content, isTrue, source } = req.body;
+    const newArticle = new Article({title, content, isTrue, source });
     newArticle.save()
         .then(article => res.send(article))
         .catch(err => res.status(500).send(err));
@@ -39,5 +39,6 @@ router.delete('/:id', (req, res) => {
         res.end();
     })
 });
+
 
 module.exports = router;
