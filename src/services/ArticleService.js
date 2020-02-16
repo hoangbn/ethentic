@@ -9,4 +9,8 @@ export default class ArticleService {
     const doneList = info.bettingHistory ? info.bettingHistory : [];
     return (await axios.get(`${ARTICLE_URL}random?doneList=[${doneList}]`)).data;
   };
+
+  static async doArticle(userSession, articleId) {
+    await UserService.spendToken(userSession, articleId);
+  }
 }
