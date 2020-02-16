@@ -10,6 +10,7 @@ import {
 import App from './App';
 import ArticleBet from './components/ArticleBet';
 import 'bootstrap/dist/css/bootstrap.css'
+import BetReceived from './components/BetReceived';
 
 const main = () => {
     return (
@@ -19,6 +20,7 @@ const main = () => {
             <Switch>
                 <Route exact path="/" component={withRouter(App)} />
                 <Route exact path="/article-bet" component={withRouter(ArticleBet)} />
+                <Route exact path="/bet-received" component={withRouter(BetReceived)} />
             </Switch>
         </Router>
     );

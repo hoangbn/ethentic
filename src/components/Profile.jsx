@@ -88,7 +88,7 @@ class Profile extends Component {
         <NavBar username={username} user={person} signOut={this.props.handleSignOut}/>
         <div style={{
           display: 'flex',
-          justifyContent: 'start',
+          justifyContent: 'center',
           alignItems: 'center',
           marginLeft: '50px',
           marginRight: '50px'
