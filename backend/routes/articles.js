@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const { title, content } = req.body;
-    const newArticle = new Article({title, content });
+    const { title, content, isTrue, source } = req.body;
+    const newArticle = new Article({title, content, isTrue, source });
     newArticle.save()
         .then(article => res.send(article))
         .catch(err => res.status(500).send(err));
@@ -32,5 +32,13 @@ router.put('/:id/addUserReview', async (req, res) => {
         res.status(500).send(err)
     }
 });
+
+router.delete('/:id', (req, res) => {
+    Article.deleteOne({ _id: req.params.id }, err => {
+        if (err) return res.status(500).send(err);
+        res.end();
+    })
+});
+
 
 module.exports = router;

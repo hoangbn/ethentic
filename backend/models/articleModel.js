@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 
 const articleSchema = new Schema({
     title: String,
-    content: String,
+    content: String, 
+    source: String,
     userReviewCount: { type: Number, default: 0 },
-    truthPercentage: Number,
+    isTrue: Boolean,
     closed: { type: Boolean, default: false },
 });
 
