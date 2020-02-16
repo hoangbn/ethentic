@@ -4,14 +4,15 @@ import NavBar from './NavBar'
 import correct from '../assets/correct.png';
 import incorrect from '../assets/incorrect.png';
 import ArticleService from "../services/ArticleService";
+import { withGlobalContext } from "../contexts/GlobalContext";
 
-
-export default class BetReceived extends Component {
+class BetReceived extends Component {
     async placeBet() {
         let randomArticle = {}
         if (this.props.location.tokenBalance <= 0) return alert("Please buy more tokens");
         try {
-          randomArticle = await ArticleService.getRandomArticle(this.props.userSession, 2);
+            const { userSession } = this.props.globalContext.state;
+            randomArticle = await ArticleService.getRandomArticle(userSession);
           // randomArticleTemp = {
           //   userReviewCount: 0,
           //   userTrueCount: 0,
@@ -150,3 +151,5 @@ export default class BetReceived extends Component {
         );
     }
 }
+
+export default withGlobalContext(BetReceived);
