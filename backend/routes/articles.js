@@ -36,10 +36,12 @@ router.get('/:id', (req, res) => {
 });
 
 router.put('/:id/addUserReview', async (req, res) => {
+    const review = req.body.review;
     try {
         const article = await Article.findOne({ _id: req.params.id });
         if (!article) return res.status(404).send("Article not found");
         article.userReviewCount++;
+        if (review == true) article.userTrueCount++;
         res.send(await article.save());
     } catch(err) {
         res.status(500).send(err);
