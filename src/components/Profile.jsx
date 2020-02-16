@@ -59,7 +59,9 @@ class Profile extends Component {
     let randomArticle = {}
     if (this.state.tokenBalance <= 0) return alert("Please buy more tokens");
     try {
-      randomArticle = await ArticleService.getRandomArticle(this.props.userSession, 2);
+      randomArticle = await ArticleService.getRandomArticle(this.props.userSession);
+      console.log("RANDOM ARTICLE")
+      console.log(randomArticle);
       // randomArticleTemp = {
       //   userReviewCount: 0,
       //   userTrueCount: 0,

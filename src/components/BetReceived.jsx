@@ -31,7 +31,7 @@ class BetReceived extends Component {
         this.props.history.push({
           pathname: '/article-bet',
           state: { 
-            tokenBalance: this.state.tokenBalance,
+            tokenBalance: this.props.location.tokenBalance,
             randomArticle
           },
         })
@@ -119,7 +119,7 @@ class BetReceived extends Component {
                         user: user,
                         signOut: signOut,
                     }}>Back to Dashboard</Link>
-                    <Link className="btn-white" style={{
+                    <button className="btn-white" style={{
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -129,7 +129,7 @@ class BetReceived extends Component {
                         marginLeft: '25px',
                         marginRight: '25px',
                         textDecoration: 'none',
-                    }} onClick={() => this.placeBet()}>Bet Again</Link>
+                    }} onClick={() => this.placeBet()}>Bet Again</button>
                     <Link className="btn-white" style={{
                         display: 'flex',
                         justifyContent: 'center',
