@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 import { withGlobalContext } from "../contexts/GlobalContext";
 import UserService from "../services/UserService";
 
-export default class ArticleBet extends Component {
+class ArticleBet extends Component {
     constructor(props) {
         super(props)
          // for the sake of developer agility (36 hours), I have opted not to create a class
@@ -31,13 +31,13 @@ export default class ArticleBet extends Component {
         this.seenArticles = JSON.parse(localStorage.getItem('seenArticles')) || []
         console.log(this.seenArticles)
 
-        let randomArticle = 0
+        let randomArticle = 0;
 
         console.log(this.seenArticles.length)
         console.log(this.articleTitles.length)
 
         if (this.seenArticles.length !== this.articleTitles.length) {
-            randomArticle = this.getRandomInt(this.articleTitles.length)
+            randomArticle = this.getRandomInt(this.articleTitles.length);
             while (this.seenArticles.includes(randomArticle)) {
                 randomArticle = this.getRandomInt(this.articleTitles.length);
             }
@@ -53,13 +53,13 @@ export default class ArticleBet extends Component {
 
     getRandomInt = (max) => {
         return Math.floor(Math.random() * Math.floor(max));
-    }
+    };
 
     render() {
         console.log(this.articleTitles);
-
+        const { userSession } = this.props.globalContext.state;
         const { username, user, signOut, tokenBalance } = this.props.location;
-        const { show, articleIsTrue, tokenFee, randomArticle } = this.state
+        const { show, articleIsTrue, tokenFee, randomArticle } = this.state;
 
         if (this.seenArticles.length === this.articleTitles.length) {
             return (
@@ -69,7 +69,6 @@ export default class ArticleBet extends Component {
                     minHeight: '100vh',
                     backgroundColor: '#36B069'
                 }}>
-                    <NavBar username={username} user={user} signOut={signOut}/>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -111,7 +110,6 @@ export default class ArticleBet extends Component {
                 minHeight: '100vh',
                 backgroundColor: '#36B069'
             }}>
-                <NavBar username={username} user={user} signOut={signOut}/>
                 <div style={{
                     display: 'flex',
                     flexDirection: 'row',
