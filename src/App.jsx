@@ -10,7 +10,9 @@ import { appConfig } from './assets/constants'
 import NavBar from "./components/NavBar";
 import { withGlobalContextProvider, withGlobalContext } from "./contexts/GlobalContext";
 import { setUserSession } from "./contexts/actions/user";
+import Credits from "./components/Credits";
 require('typeface-roboto');
+
 
 const userSession = new UserSession({ appConfig });
 
@@ -38,6 +40,7 @@ class App extends Component {
                         <Route exact path="/" component={Profile} />
                         <Route exact path="/article-bet" component={ArticleBet} />
                         <Route exact path="/bet-received" component={BetReceived} />
+                      <Route exact path="/heyheyy" component={Credits} />
                     </Switch>
                   </div>
               )

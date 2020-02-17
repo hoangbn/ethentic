@@ -8,30 +8,22 @@ import UserService from "../services/UserService";
 class ArticleBet extends Component {
     constructor(props) {
         super(props);
-         // for the sake of developer agility (36 hours), I have opted not to create a class
-        this.articleTitles = [
-            `CDC Recommends Also Wearing Face Mask On Back Of Head In Case Coronavirus Attacks From Rear`,
-            `Are they mean? Donald Trump obsessed with badgers, new book claims`,
-        ];
-        this.articleContents = [
-            `As documented cases of the disease increased and more Americans wanted to take proactive measures to avoid infection, the Centers for Disease Control and Prevention reportedly recommended Thursday also wearing a face mask on the back of one’s head in case the coronavirus attacks from the rear. “Given the ruthless efficiency at which the coronavirus can spread, we’re advising all Americans that wearing a face mask over your mouth is insufficient to fully protect yourself from any particularly wily strains of the virus sneaking up behind you and catching you unaware,” said CDC principal deputy director Anne Schuchat, explaining that the coronavirus was a notoriously sneaky disease and put anyone who didn’t adequately safeguard their back and the sides of their body at imminent risk. “Look, this is a disease that plays dirty, and in that respect, it’s much worse than SARS. You’ll need to have all your wits about you if you intend to stay one step ahead of its wicked grasp. You never know when it could creep silently behind you and infect you from the rear, which is why the CDC recommends that in addition to wearing a face mask on the back of your head, you always sit facing the entrance of any room you’re in with your back to the wall. We also strongly caution all Americans to look at any mirror they pass by in case the coronavirus is trying to trail them, and also to wear another face mask on top of your head to shield against aerial attacks.” CDC officials also recommended singing loudly, wearing strings of bells around your neck, or frequently blowing an air horn in an effort to scare off any coronavirus that might be lingering nearby.`,
-            `Of all the topics to occupy the mind of the most powerful person in the United States, one would not expect badgers to make a frequent appearance. But the rotund, hairy omnivores were apparently an alarmingly regular topic of conversation in the White House during the early months of Donald Trump’s presidency, according to Daily Beast reporters Lachlan Markay and Asawin Suebsaeng. “Are they mean to people?” Trump reportedly asked Priebus, perhaps thinking of badgers’ very long claws, which they use to dig the burrows that make their home. “Or are they friendly creatures?” Trump would also demand to see photos of badgers, ask Priebus to give details on how badgers “work”, and wanted to know if they had a “personality” or were boring. Priebus was also called upon to explain “how the critters function and behave, what kind of food they like, and how aggressive or deadly they could be when presented with perceived existential threats”. Markay and Suebsaeng said Trump would frequently derail important policy discussions with questions about the animals. “An obviously enthralled president would stare at Priebus as the aide struggled for sufficiently placating answers, all the while trying to gently veer the conversation back to whether we were going to do a troop surge in Afghanistan or strip millions of Americans of healthcare coverage,” they wrote. Trump did not specify which of the 11 species of badger he especially wanted to understand, but given he appeared to be obsessed with the animal due to its association with Priebus’s home state of Wisconsin, it was most likely the American badger – scientific name Taxidea taxus – that commanded his attention.`,
-        ];
-        this.articleSources = [
-            'The Onion',
-            'The Guardian'
-        ];
-        this.articleMLTruths = [
-            false,
-            true
-        ];
-
         this.state = {
             show: false,
-            articleIsTrue: true,
-            tokenFee: 1,
+            tokenBalance: 0
         }
     }
+    
+
+    componentWillMount() {
+        this.reloadInfo();
+    }
+
+    async reloadInfo() {
+        const userInfo = await UserService.getInfo(this.props.globalContext.state.userSession);
+        const { numTokens } = userInfo;
+        this.setState({tokenBalance: numTokens ? numTokens : 0 });
+      }
 
     getRandomInt = (max) => {
         return Math.floor(Math.random() * Math.floor(max));
@@ -47,50 +39,47 @@ class ArticleBet extends Component {
 
         console.log(this.articleTitles);
         const { userSession } = this.props.globalContext.state;
-        let tokenBalance = 0;
-        if (this.props.location.state) {
-            const { username, user, tokenBalance } = this.props.location.state;
-        }
-        const { show, articleIsTrue, tokenFee, randomArticle } = this.state;
+        const { username, user, randomArticle, tokenBalance } = this.props.location.state;
+        const { show, articleIsTrue, tokenFee } = this.state;
 
-        // if (Object.keys(randomArticle) === 0) {
-        //     return (
-        //         <div style={{
-        //             display: 'flex',
-        //             flexDirection: 'column',
-        //             minHeight: '100vh',
-        //             backgroundColor: '#36B069'
-        //         }}>
-        //             <div style={{
-        //                 display: 'flex',
-        //                 flexDirection: 'column',
-        //                 alignItems: 'center',
-        //                 marginTop: '50px'
-        //             }}>
-        //                 <p style={{
-        //                     fontFamily: 'Roboto',
-        //                     color: '#fff',
-        //                     fontSize: '30px'
-        //                 }}>You've completed all the questions, great job! 🎉🎉🎉</p>
-        //                 <Link className="btn-white" style={{
-        //                     display: 'flex',
-        //                     justifyContent: 'center',
-        //                     alignItems: 'center',
-        //                     outline: 'none',
-        //                     marginTop: '25px',
-        //                     marginBottom: '55px',
-        //                     marginRight: '25px',
-        //                     textDecoration: 'none',
-        //                 }} to={{
-        //                     pathname: '/',
-        //                     userSession: userSession
-        //                 }}>
-        //                     Restart Demo
-        //                 </Link>
-        //             </div>
-        //         </div>
-        //     )
-        // }
+        if (!randomArticle || Object.entries(randomArticle).length === 0) {
+            return (
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minHeight: '100vh',
+                    backgroundColor: '#36B069'
+                }}>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        marginTop: '50px'
+                    }}>
+                        <p style={{
+                            fontFamily: 'Roboto',
+                            color: '#fff',
+                            fontSize: '30px'
+                        }}>You've completed all the questions, great job! 🎉🎉🎉</p>
+                        <Link className="btn-white" style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            outline: 'none',
+                            marginTop: '25px',
+                            marginBottom: '55px',
+                            marginRight: '25px',
+                            textDecoration: 'none',
+                        }} to={{
+                            pathname: '/',
+                            userSession: userSession
+                        }} onClick={() => UserService.resetArticles(userSession)}>
+                            Restart Demo
+                        </Link>
+                    </div>
+                </div>
+            )
+        }
 
 
         return (
@@ -162,7 +151,7 @@ class ArticleBet extends Component {
                             textDecoration: 'none',
                             marginRight: '35px'
                         }} onClick={() => {
-                            this.setState({show: true, articleIsTrue: true})
+                            this.setState({ show: true, articleIsTrue: true })
                         }}>Yes</button>
                         <button className="btn-white" style={{
                             display: 'flex',
@@ -198,11 +187,13 @@ class ArticleBet extends Component {
                             articleIsTrue,
                             articleIsTrueML: isTrue,
                             articleTitle: title,
-                            articleSource: source
+                            articleSource: source,
+                            tokenBalance
                         }}>
-                            <Button variant="success" onClick={() => {
-                                this.setState({ show: false, articleIsTrue: true })
-                                UserService.spendToken(userSession, _id)
+                            <Button variant="success" onClick={async () => {
+                                this.setState({ show: false, articleIsTrue: true });
+                                await UserService.spendToken(userSession, _id);
+                                await this.reloadInfo();
                             }}>
                                 Save Changes
                             </Button>

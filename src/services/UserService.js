@@ -27,8 +27,15 @@ export default class UserService {
         if (!userInfo[TOKENS_FIELD] || userInfo[TOKENS_FIELD] <= 0) throw new Error("Not Enough Tokens");
         userInfo[TOKENS_FIELD]--;
         let doneList = userInfo.bettingHistory ? userInfo.bettingHistory : [];
-        doneList.push(articleId);
+        doneList.push('"' + articleId + '"');
         userInfo.bettingHistory = doneList;
+        this.setInfo(userSession, userInfo);
+    }
+
+    static async resetArticles(userSession) {
+        let userInfo = await this.getInfo(userSession);
+        userInfo.bettingHistory = [];
+        console.log(userInfo);
         this.setInfo(userSession, userInfo);
     }
 
