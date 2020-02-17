@@ -13,8 +13,8 @@ class Signin extends Component {
         </nav>
         <div className ="intro">
           <div className="panel-landing" id="section-1">
-            <h1 className="landing-heading">BetStack</h1>
-            <p>A decentralized To-do app built on <a href="https://blockstack.org" target="_blank"rel="noopener noreferrer">Blockstack</a></p>
+            <h1 className="landing-heading">ETHentic</h1>
+            <p>A decentralized ether based betting platform</p>
             <button
               className="btn-emerald"
               id="signin-button"

@@ -10,7 +10,7 @@ class NavBar extends Component {
         const user = new Person(profile);
         return (
           <nav className="navbar navbar-white">
-            <Link className="navbar-brand navbar-child" to="/">Bet Stack</Link>
+            <Link className="navbar-brand navbar-child" to="/">ETHentic</Link>
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <Link className="nav-link navbar-child" to='/' style={{
