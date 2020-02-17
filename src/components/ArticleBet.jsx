@@ -191,8 +191,8 @@ class ArticleBet extends Component {
                             tokenBalance
                         }}>
                             <Button variant="success" onClick={async () => {
-                                this.setState({ show: false, articleIsTrue: true })
-                                await UserService.spendToken(userSession, _id)
+                                this.setState({ show: false, articleIsTrue: true });
+                                await UserService.spendToken(userSession, _id);
                                 await this.reloadInfo();
                             }}>
                                 Save Changes

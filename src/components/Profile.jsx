@@ -12,6 +12,7 @@ import Form from 'react-bootstrap/Form'
 import '../styles/Profile.css'
 import '../styles/NavBar.css'
 import {withGlobalContext} from "../contexts/GlobalContext";
+import {parse} from "ethers/utils/transaction";
 
 class Profile extends Component {
   constructor(props) {
@@ -106,7 +107,7 @@ class Profile extends Component {
             marginRight: '75px',
             height: '150px',
             justifyContent: 'space-around',
-            alignItems: 'flex-start',
+            alignItems: 'center',
           }}>
             <p style={{
               fontFamily: 'Roboto',
@@ -167,9 +168,12 @@ class Profile extends Component {
                   <Button variant="success" onClick={async (e) => {
                     if (this.inputNode.value && Number.isInteger(parseInt(this.inputNode.value))) {
                       this.setState({ show: false, articleIsTrue: true });
-                      await PaymentService.receivePayment(PaymentService.calculateFee(this.inputNode.value));
-                      await UserService.addTokens(userSession, this.inputNode.value);
+                      const val = this.inputNode.value
+                      console.log(this.inputNode.value);
+                      console.log(userSession);
+                      await UserService.addTokens(userSession, parseInt(val));
                       this.reloadInfo();
+                      await PaymentService.receivePayment(PaymentService.calculateFee(val));
                     }
                   }}>
                       Save Changes
@@ -188,4 +192,4 @@ Profile.defaultProps = {
   userSession: new UserSession(appConfig)
 };
 
-export default Profile;
+export default withGlobalContext(Profile);
